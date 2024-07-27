@@ -1,13 +1,14 @@
 'use client'
 
-import { Button, Card, Fab, LinearProgress, Tooltip, Typography } from '@mui/material'
-import { Budgets, Expences } from '@prisma/client'
+import React, { useState } from 'react'
+import { Card, LinearProgress, Tooltip, Typography } from '@mui/material'
 import axios from 'axios'
-import { DollarSign, Loader, Plus } from 'lucide-react'
+import { Loader, Plus } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
 import toast from 'react-hot-toast'
+
+import type { Budgets, Expences } from '@prisma/client'
 
 interface BudgetCardItemProps {
   budget: Budgets & { expences: Expences[] }
@@ -33,7 +34,7 @@ export const BudgetCardItem = ({ budget }: BudgetCardItemProps) => {
   const updateBudgetAmount = async () => {
     try {
       setIsLoading(true)
-      const response = await axios.patch(`/api/budgets/${budget?.id}`, { amount: '50' })
+      await axios.patch(`/api/budgets/${budget.id}`, { amount: '50' })
       toast.success('Budget Updated')
       router.refresh()
     } catch (error) {
@@ -44,7 +45,7 @@ export const BudgetCardItem = ({ budget }: BudgetCardItemProps) => {
   }
 
   return (
-    <Card className='p-2 space-y-4 ' variant='outlined'>
+    <Card className='p-2 space-y-4' variant='outlined'>
       <div className='flex items-center justify-between'>
         <div className='flex items-center gap-2'>
           <div className='flex items-center justify-center bg-purple-200/50 rounded-full text-3xl min-w-12 min-h-12'>
@@ -82,6 +83,7 @@ export const BudgetCardItem = ({ budget }: BudgetCardItemProps) => {
           </Typography>
         </div>
       </div>
+
       <div className='space-y-2'>
         <div className='flex items-center justify-between'>
           <Typography variant='body2'>Spent: {totalExpenses.toFixed(2)} $</Typography>

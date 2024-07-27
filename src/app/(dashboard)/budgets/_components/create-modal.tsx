@@ -1,23 +1,20 @@
 'use client'
 
-import { Modal } from '@/components/modal'
 import { useEffect, useState } from 'react'
-
-import { z } from 'zod'
-import { Controller, useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-
-import EmojiPicker from 'emoji-picker-react'
-import { useRouter } from 'next/navigation'
 import { Box, Button, Divider, TextField } from '@mui/material'
+import { Controller, useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import EmojiPicker from 'emoji-picker-react'
 import toast from 'react-hot-toast'
 import axios from 'axios'
+import { useRouter } from 'next/navigation'
+
+import { Modal } from '@/components/modal'
 
 interface CreateBudgetModalProps {
   isOpen: boolean
   onClose: () => void
-  onConfirm: () => void
-  loading: boolean
 }
 
 const formSchema = z.object({
@@ -26,7 +23,7 @@ const formSchema = z.object({
   amount: z.string().refine(value => parseFloat(value) > 0, { message: 'Amount must be greater than 0' })
 })
 
-export const CreateBudgetModal = ({ isOpen, onClose, onConfirm, loading }: CreateBudgetModalProps) => {
+export const CreateBudgetModal = ({ isOpen, onClose }: CreateBudgetModalProps) => {
   const [isMounted, setIsMounted] = useState(false)
   const [openEmojiPicker, setOpenEmojiPicker] = useState(false)
 

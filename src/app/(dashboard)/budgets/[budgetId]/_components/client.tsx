@@ -1,9 +1,10 @@
 'use client'
 
-import { BudgetCardItem } from '@/app/(dashboard)/budgets/_components/budget-card-item'
-import { Card, Grid, Typography } from '@mui/material'
-import { Budgets, Expences } from '@prisma/client'
 import React from 'react'
+import { Card, Grid } from '@mui/material'
+import type { Budgets, Expences } from '@prisma/client'
+
+import { BudgetCardItem } from '@/app/(dashboard)/budgets/_components/budget-card-item'
 import { AddExpence } from './add-expence'
 
 interface PageClientProps {

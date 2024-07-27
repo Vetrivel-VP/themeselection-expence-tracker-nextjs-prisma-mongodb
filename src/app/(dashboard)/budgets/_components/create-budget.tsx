@@ -1,17 +1,17 @@
 'use client'
 
+import React, { useState } from 'react'
 import { Button, Card } from '@mui/material'
 import { Plus } from 'lucide-react'
-import React, { useState } from 'react'
+
 import { CreateBudgetModal } from './create-modal'
 
 export const CreateBudget = () => {
-  const [isLoading, setIsLoading] = useState(false)
   const [open, setOpen] = useState(false)
 
   return (
     <React.Fragment>
-      <CreateBudgetModal isOpen={open} onClose={() => setOpen(false)} onConfirm={() => {}} loading={isLoading} />
+      <CreateBudgetModal isOpen={open} onClose={() => setOpen(false)} />
       <Card
         variant='outlined'
         className='border-dashed border-2 h-28 flex items-center justify-center'

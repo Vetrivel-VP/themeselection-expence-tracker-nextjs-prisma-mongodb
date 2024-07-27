@@ -1,8 +1,8 @@
-import { Card } from '@mui/material'
-import BudgetClient from './_components/budget-client'
 import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
 import { db } from '@/libs/db'
+
+import BudgetClient from './_components/budget-client'
 
 const BudgetsPage = async () => {
   const { userId } = auth()
