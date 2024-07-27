@@ -7,3 +7,5 @@ const nextConfig = {
 }
 
 export default nextConfig
+
+// npm uninstall eslint eslint-config-next eslint-plugin-next

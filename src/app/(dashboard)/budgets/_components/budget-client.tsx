@@ -30,7 +30,7 @@ const BudgetClient = ({ budgets }: BudgetClientProps) => {
 
   return (
     <div className='flex-col'>
-      <div className='flex items-center justify-between'>
+      <div className='flex flex-col md:flex-row items-center justify-between'>
         <Heading title='My Budgets' description='Manage your budgets here' />
         <div className='flex items-center gap-4'>
           <div className='flex items-center gap-2'>
