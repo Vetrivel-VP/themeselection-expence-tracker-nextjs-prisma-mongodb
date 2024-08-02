@@ -107,17 +107,19 @@ const DashboardAnalytics = async () => {
               trend='positive'
             />
           </Grid> */}
-          <Grid item xs={12} sm={12}>
-            <CardStatVertical
-              stats={formatNumber(parseFloat(expences[0].amount))}
-              trend='negative'
-              trendNumber=''
-              title={expences[0].name}
-              subtitle='New Expence'
-              avatarColor='primary'
-              avatarIcon='ri-file-word-2-line'
-            />
-          </Grid>
+          {expences && expences.length > 0 && (
+            <Grid item xs={12} sm={12}>
+              <CardStatVertical
+                stats={formatNumber(parseFloat(expences[0].amount))}
+                trend='negative'
+                trendNumber=''
+                title={expences[0]?.name}
+                subtitle='New Expence'
+                avatarColor='primary'
+                avatarIcon='ri-file-word-2-line'
+              />
+            </Grid>
+          )}
           {/* <Grid item xs={12} sm={6}>
             <DistributedColumnChart />
           </Grid> */}
