@@ -41,7 +41,7 @@ const NavbarContent = () => {
           <i className='ri-notification-2-line' />
         </IconButton> */}
         {/* <UserDropdown /> */}
-        <UserButton />
+        <UserButton afterSignOutUrl='/' />
       </div>
     </div>
   )
