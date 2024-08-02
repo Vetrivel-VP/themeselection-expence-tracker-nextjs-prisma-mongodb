@@ -14,9 +14,14 @@ import type { ApexOptions } from 'apexcharts'
 const AppReactApexCharts = dynamic(() => import('@/libs/styles/AppReactApexCharts'))
 
 // Vars
-const series = [{ data: [0, 20, 5, 30, 15, 45] }]
 
-const LineChart = () => {
+interface LineChartProps {
+  totalExpences: string
+  data: number[]
+}
+
+const LineChart = ({ data, totalExpences }: LineChartProps) => {
+  const series = [{ data: data }]
   const primaryColor = 'var(--mui-palette-primary-main)'
 
   const options: ApexOptions = {
@@ -77,10 +82,10 @@ const LineChart = () => {
   return (
     <Card>
       <CardContent>
-        <Typography variant='h4'>$86.4k</Typography>
+        <Typography variant='h4'>${totalExpences}</Typography>
         <AppReactApexCharts type='line' height={88} width='100%' options={options} series={series} />
         <Typography color='text.primary' className='font-medium text-center'>
-          Total Profit
+          Week Expences
         </Typography>
       </CardContent>
     </Card>

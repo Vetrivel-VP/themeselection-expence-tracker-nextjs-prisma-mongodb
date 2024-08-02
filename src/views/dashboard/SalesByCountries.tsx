@@ -13,6 +13,10 @@ import type { ThemeColor } from '@core/types'
 // Components Imports
 import OptionMenu from '@core/components/option-menu'
 import CustomAvatar from '@core/components/mui/Avatar'
+import { Budgets, Expences } from '@prisma/client'
+import { DollarSign } from 'lucide-react'
+import { formatNumber } from '../../../actions/analytics'
+import { format } from 'date-fns'
 
 type DataType = {
   avatarLabel: string
@@ -73,26 +77,27 @@ const data: DataType[] = [
   }
 ]
 
-const SalesByCountries = () => {
+interface PageClientProps {
+  expences: Expences[] | []
+}
+
+const SalesByCountries = ({ expences }: PageClientProps) => {
   return (
     <Card>
-      <CardHeader
-        title='Sales by Countries'
-        action={<OptionMenu iconClassName='text-textPrimary' options={['Last 28 Days', 'Last Month', 'Last Year']} />}
-      />
+      <CardHeader title='Sales by Countries' />
       <CardContent className='flex flex-col gap-[0.875rem]'>
-        {data.map((item, index) => (
+        {expences.map((item, index) => (
           <div key={index} className='flex items-center gap-4'>
-            <CustomAvatar skin='light' color={item.avatarColor}>
-              {item.avatarLabel}
+            <CustomAvatar skin='light' color={'primary'}>
+              <DollarSign />
             </CustomAvatar>
             <div className='flex items-center justify-between is-full flex-wrap gap-x-4 gap-y-2'>
               <div className='flex flex-col gap-1'>
                 <div className='flex items-center gap-1'>
                   <Typography color='text.primary' className='font-medium'>
-                    {item.title}
+                    {item.name}
                   </Typography>
-                  <div className={'flex items-center gap-1'}>
+                  {/* <div className={'flex items-center gap-1'}>
                     <i
                       className={classnames(
                         item.trend === 'up' ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line',
@@ -102,16 +107,15 @@ const SalesByCountries = () => {
                     <Typography color={item.trend === 'up' ? 'success.main' : 'error.main'}>
                       {item.trendPercentage}
                     </Typography>
-                  </div>
+                  </div> */}
                 </div>
-                <Typography>{item.subtitle}</Typography>
+                <Typography variant='body2' color='text.disabled'>
+                  {format(new Date(item.createdAt), 'MMMM dd, yyyy')}
+                </Typography>
               </div>
               <div className='flex flex-col gap-1'>
-                <Typography color='text.primary' className='font-medium'>
-                  {item.sales}
-                </Typography>
-                <Typography variant='body2' color='text.disabled'>
-                  Sales
+                <Typography variant='body2' color='text.primary' className='font-medium'>
+                  ${formatNumber(parseFloat(item.amount))}
                 </Typography>
               </div>
             </div>

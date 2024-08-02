@@ -1,13 +1,14 @@
 'use client'
 
 import React from 'react'
-import { Box, Button, Card, TextField, Typography } from '@mui/material'
+import { Box, Button, Card, InputAdornment, TextField, Typography } from '@mui/material'
 import { z } from 'zod'
 import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useParams, useRouter } from 'next/navigation'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import { BadgeDollarSign, WalletMinimal } from 'lucide-react'
 
 const formSchema = z.object({
   name: z.string().min(2, { message: 'Budget title cannot be empty' }),
@@ -64,6 +65,13 @@ export const AddExpence = () => {
                 label={!!errors.name ? errors?.name.message : 'Expence Name'}
                 variant='outlined'
                 {...field}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <WalletMinimal />
+                    </InputAdornment>
+                  )
+                }}
               />
             )}
           />
@@ -79,6 +87,13 @@ export const AddExpence = () => {
                 label={!!errors.amount ? errors?.amount.message : 'Amount : eg:- 1000$'}
                 variant='outlined'
                 {...field}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <BadgeDollarSign />
+                    </InputAdornment>
+                  )
+                }}
               />
             )}
           />

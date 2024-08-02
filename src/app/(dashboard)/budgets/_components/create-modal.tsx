@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Box, Button, Divider, TextField } from '@mui/material'
+import { Box, Button, Divider, InputAdornment, TextField } from '@mui/material'
 import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -11,6 +11,7 @@ import axios from 'axios'
 import { useRouter } from 'next/navigation'
 
 import { Modal } from '@/components/modal'
+import { BadgeDollarSign, WalletMinimal } from 'lucide-react'
 
 interface CreateBudgetModalProps {
   isOpen: boolean
@@ -77,6 +78,13 @@ export const CreateBudgetModal = ({ isOpen, onClose }: CreateBudgetModalProps) =
                   label={!!errors.name ? errors?.name.message : 'Budget Title'}
                   variant='outlined'
                   {...field}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position='start'>
+                        <WalletMinimal />
+                      </InputAdornment>
+                    )
+                  }}
                 />
               )}
             />
@@ -98,7 +106,17 @@ export const CreateBudgetModal = ({ isOpen, onClose }: CreateBudgetModalProps) =
           </div>
           {openEmojiPicker && (
             <Box sx={{ position: 'relative' }}>
-              <Box sx={{ position: 'fixed', zIndex: 10, right: '5%', overflow: 'visible' }}>
+              <Box
+                sx={{
+                  position: 'fixed',
+                  zIndex: 10,
+                  inset: 0,
+                  overflow: 'visible',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
                 <EmojiPicker
                   onEmojiClick={e => {
                     form.setValue('icon', e.emoji)
@@ -120,6 +138,13 @@ export const CreateBudgetModal = ({ isOpen, onClose }: CreateBudgetModalProps) =
                 label={!!errors.amount ? errors?.amount.message : 'Amount : eg:- 1000$'}
                 variant='outlined'
                 {...field}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position='start'>
+                      <BadgeDollarSign />
+                    </InputAdornment>
+                  )
+                }}
               />
             )}
           />

@@ -1,3 +1,5 @@
+'use client'
+
 // MUI Imports
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
@@ -9,11 +11,20 @@ import type { CardStatsVerticalProps } from '@/types/pages/widgetTypes'
 // Components Imports
 import CustomAvatar from '@core/components/mui/Avatar'
 import OptionMenu from '@core/components/option-menu'
+import { useRouter } from 'next/navigation'
+import toast from 'react-hot-toast'
 
 const CardStatVertical = (props: CardStatsVerticalProps) => {
   // Props
   const { title, stats, avatarIcon, avatarColor, trendNumber, trend, subtitle, avatarSkin, avatarSize, moreOptions } =
     props
+
+  const router = useRouter()
+
+  const handleRefresh = async () => {
+    router.refresh()
+    toast.success('Data Reloaded')
+  }
 
   return (
     <Card className='bs-full'>
@@ -26,7 +37,7 @@ const CardStatVertical = (props: CardStatsVerticalProps) => {
             {...(moreOptions
               ? moreOptions
               : {
-                  options: ['Refresh', 'Share', 'Update'],
+                  options: [{ text: 'Refresh', menuItemProps: { onClick: handleRefresh } }],
                   iconButtonProps: { className: 'text-textPrimary' }
                 })}
           />
@@ -37,9 +48,11 @@ const CardStatVertical = (props: CardStatsVerticalProps) => {
           </Typography>
           <div className='flex gap-x-2 gap-y-0.5 items-center flex-wrap'>
             <Typography variant='h4'>{stats}</Typography>
-            <Typography color={trend === 'negative' ? 'error.main' : 'success.main'}>
-              {`${trend === 'negative' ? '-' : '+'}${trendNumber}`}
-            </Typography>
+            {trendNumber && (
+              <Typography color={trend === 'negative' ? 'error.main' : 'success.main'}>
+                {`${trend === 'negative' ? '-' : '+'}${trendNumber}`}
+              </Typography>
+            )}
           </div>
           <Typography variant='body2'>{subtitle}</Typography>
         </div>

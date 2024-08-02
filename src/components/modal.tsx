@@ -36,6 +36,7 @@ export const Modal = ({ title, description, isOpen, onClose, children }: ModalPr
       onClose={onClose}
       aria-labelledby='customized-dialog-title'
       open={isOpen}
+      className='overflow-visible'
     >
       <DialogTitle sx={{ m: 0, p: 2 }} id='customized-dialog-title'>
         {title}

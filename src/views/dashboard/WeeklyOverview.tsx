@@ -16,13 +16,24 @@ import type { ApexOptions } from 'apexcharts'
 
 // Components Imports
 import OptionsMenu from '@core/components/option-menu'
+import { useRouter } from 'next/navigation'
+import toast from 'react-hot-toast'
+import Link from 'next/link'
 
 // Styled Component Imports
 const AppReactApexCharts = dynamic(() => import('@/libs/styles/AppReactApexCharts'))
 
-const WeeklyOverview = () => {
+interface WeeklyOverviewProps {
+  data: number[]
+  percentage: string
+  totalExpences: string
+  totalBudget: string
+}
+
+const WeeklyOverview = ({ data, percentage, totalExpences, totalBudget }: WeeklyOverviewProps) => {
   // Hooks
   const theme = useTheme()
+  const router = useRouter()
 
   // Vars
   const divider = 'var(--mui-palette-divider)'
@@ -87,27 +98,43 @@ const WeeklyOverview = () => {
     }
   }
 
+  const handleRefresh = async () => {
+    router.refresh()
+    toast.success('Data Reloaded')
+  }
+
   return (
     <Card>
       <CardHeader
         title='Weekly Overview'
-        action={<OptionsMenu iconClassName='text-textPrimary' options={['Refresh', 'Update', 'Delete']} />}
+        action={
+          <OptionsMenu
+            iconClassName='text-textPrimary'
+            options={[{ text: 'Refresh', menuItemProps: { onClick: handleRefresh } }]}
+          />
+        }
       />
       <CardContent sx={{ '& .apexcharts-xcrosshairs.apexcharts-active': { opacity: 0 } }}>
         <AppReactApexCharts
           type='bar'
           height={206}
           width='100%'
-          series={[{ name: 'Sales', data: [37, 57, 45, 75, 57, 40, 65] }]}
+          series={[{ name: 'Sales', data: data }]}
           options={options}
         />
-        <div className='flex items-center mbe-4 gap-4'>
-          <Typography variant='h4'>45%</Typography>
-          <Typography>Your sales performance is 45% 😎 better compared to last month</Typography>
+        <div className='flex items-center mbe-4 gap-4 '>
+          <Typography variant='h4'>{percentage}</Typography>
+          <Typography variant='body2'>
+            This week, you have spent <strong>${totalExpences}</strong>, which is
+            <strong> {percentage} </strong> of your total budget of
+            <strong> ${totalBudget}</strong>. Keep up the great work or consider adjusting your spending!
+          </Typography>
         </div>
-        <Button fullWidth variant='contained'>
-          Details
-        </Button>
+        <Link href={'/expenses'}>
+          <Button fullWidth variant='contained'>
+            Details
+          </Button>
+        </Link>
       </CardContent>
     </Card>
   )

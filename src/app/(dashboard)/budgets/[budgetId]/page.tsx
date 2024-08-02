@@ -16,7 +16,7 @@ const ExpencePage = async ({ params }: { params: { budgetId: string } }) => {
 
   const budget = await db.budgets.findUnique({
     where: { userId, id: params.budgetId },
-    include: { expences: true }
+    include: { expences: { orderBy: { createdAt: 'desc' } } }
   })
 
   if (!budget) {
